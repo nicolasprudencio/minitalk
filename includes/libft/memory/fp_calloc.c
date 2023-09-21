@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fp_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fpolaris <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:42:43 by fpolaris          #+#    #+#             */
-/*   Updated: 2023/05/23 10:19:22 by fpolaris         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:55:50 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*fp_calloc(size_t nmemb, size_t size)
 	if (over != 0 && over / size != nmemb)
 		return (NULL);
 	ret = (void *)malloc(nmemb * size);
-	if (ret == NULL)
+	if (!ret)
 		return (NULL);
 	fp_memset(ret, 0, (nmemb * size));
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 17:34:45 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/21 18:28:53 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:33:22 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,52 @@
 MU_TEST(enqueue_pre_alloc_test)
 {
 	t_queue	*front;
+	t_queue	*front2;
 	t_queue *temp;
 
-	front = (t_queue *)fp_calloc(1, sizeof(t_queue));
-	for (int i = 0; i < 4; i++)
-		enqueue_pre_alloc(front, i);
+	front = NULL;
+	for (int i = 0; i < 2000; i++)
+		enqueue_pre_alloc(&front, i);
+	front2 = (t_queue *)fp_calloc(1, sizeof(t_queue));
+	for (int i = 0; i < 20; i++)
+		enqueue_pre_alloc(&front2, i);
 	temp = front;
-	for (int i = 0; i< 4; i++)
+	for (int i = 0; i< 2000; i++)
 	{
 		mu_check(temp->bin == i);
 		temp = temp->next;
 	}
+	temp = front2;
+	enqueue_pre_alloc(&front2, 30);
+	while (temp->next)
+		temp = temp->next;
+	mu_check(temp->bin == 30);
 }
 
 MU_TEST(enqueue_alloc_onreq_test)
 {
 	t_queue	*front;
+	t_queue	*front2;
 	t_queue *temp;
 
-	front = (t_queue *)fp_calloc(1, sizeof(t_queue));
-	for (int i = 0; i < 4; i++)
-		enqueue_alloc_onreq(front, i);
+	front = NULL;
+	for (int i = 0; i < 2000; i++)
+		enqueue_alloc_onreq(&front, i);
 	temp = front;
-	for (int i = 0; i< 4; i++)
+	for (int i = 0; i < 2000; i++)
 	{
 		mu_check(temp->bin == i);
 		temp = temp->next;
 	}
+	front2 = (t_queue *)fp_calloc(1, sizeof(t_queue));
+	for (int i = 0; i < 20; i++)
+		enqueue_alloc_onreq(&front2, i);
+	enqueue_alloc_onreq(&front2, 35);
+	temp = front2;	
+	while (temp->next)
+		temp = temp->next;
+	mu_check(temp->bin == 35);
+	
 }
 
 MU_TEST_SUITE(queue_suit)
