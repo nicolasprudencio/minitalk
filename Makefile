@@ -17,7 +17,8 @@ OBJS_ALL	=	$(addprefix $(OBJS_DIR)/,$(SRCS_ALL:.c=.o))
 MAIN_SERVER	=	srcs/server/main.c
 MAIN_NIKKO	=	srcs/client/nikko/main.c
 MAIN_FAUNA	=	srcs/client/polarium/main.c
-QUEUE_TEST	=	srcs/server/tests/queue_test.c
+ENQUEUE_TEST	=	srcs/server/tests/enqueue_test.c
+DEQUEUE_TEST	=	srcs/server/tests/dequeue_test.c
 
 ANSI		=	\033[0
 YELLOW		=	;33
@@ -26,11 +27,14 @@ RED			=	;31
 
 all: $(OBJS_ALL) libft_make server client
 
-tests: $(OBJS_ALL) queue_test
+tests: $(OBJS_ALL) queue_test enqueue_test
 
-queue_test: libft_make
-	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o $< $(QUEUE_TEST) $(LIBS_LINK)
+enqueue_test: $(OBJS_ALL) libft_make
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o enqueue_test $(ENQUEUE_TEST) $(LIBS_LINK)
 
+dequeue_test: $(OBJS_ALL) libft_make
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o dequeue_test $(DEQUEUE_TEST) $(LIBS_LINK)
+	
 libft_make:
 	@make -C $(LIBFT_DIR)
 
@@ -55,4 +59,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all tests queue_test libft_make server client clean f_clean re
+.PHONY: all tests enqueue_test dequeue_test libft_make server client clean f_clean re

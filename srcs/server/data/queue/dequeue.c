@@ -12,11 +12,13 @@ int	dequeue_fauna(t_queue *front)
 	if (!front->next)
 	{
 		free(front);
+		front = NULL;
 		return (bin);
 	}
 	temp = front;
 	front = front->next;
 	free(temp);
+	temp = NULL;
 	return (bin);
 }
 
@@ -34,8 +36,10 @@ int	dequeue_nikko(t_queue *front)
 	else
 	{
 		free(front);
+		front = NULL;
 		return (bin);
-	}	
+	}
 	free(aux);
+	aux = NULL;
 	return (bin);
 }
