@@ -1,0 +1,6 @@
+main.c
+*.swp
+a.out
+*_main.c
+objs
+*.a
