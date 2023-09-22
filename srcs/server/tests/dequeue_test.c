@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 20:10:05 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/22 15:05:33 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:17:46 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,29 @@ MU_TEST(test_dequeue_output_fauna)
 	int i = 0;
 	while (front)
 	{
+		output = dequeue_fauna(&front);
+		mu_check(output == i);
+		i++;
+	}
+}
+
+MU_TEST(test_dequeue_output_nikko)
+{
+	t_queue	*front;
+	int		output;
+
+	front = NULL;
+	for (int i = 0; i < 20; i++)
+		enqueue_pre_alloc(&front, i);
+	int i = 0;
+	while (front)
+	{
 		output = dequeue_nikko(&front);
 		mu_check(output == i);
 		i++;
 	}
 }
+
 
 MU_TEST(test_first_pos_ref_fauna)
 {	
@@ -59,6 +77,7 @@ MU_TEST(test_first_pos_ref_nikko)
 MU_TEST_SUITE(dequeue_suit)
 {
 	MU_RUN_TEST(test_dequeue_output_fauna);
+	MU_RUN_TEST(test_dequeue_output_nikko);
 	MU_RUN_TEST(test_first_pos_ref_fauna);
 	MU_RUN_TEST(test_first_pos_ref_nikko);
 }
