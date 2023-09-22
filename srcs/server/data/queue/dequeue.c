@@ -1,42 +1,42 @@
 #include "queue.h"
 #include "libft.h"
 
-int	dequeue_fauna(t_queue *front)
+int	dequeue_fauna(t_queue **front)
 {
 	int		bin;
 	t_queue	*temp;
 
-	if (!front)
+	if (!*front)
 		return (-1);
-	bin = front->bin;
-	if (!front->next)
+	temp = *front;
+	bin = temp->bin;
+	if (!temp->next)
 	{
-		free(front);
-		front = NULL;
+		free(*front);
+		*front = NULL;
 		return (bin);
 	}
-	temp = front;
-	front = front->next;
+	*front = temp->next;
 	free(temp);
 	temp = NULL;
 	return (bin);
 }
 
-int	dequeue_nikko(t_queue *front)
+int	dequeue_nikko(t_queue **front)
 {
 	t_queue	*aux;
 	int		bin;
 
-	if (!front)
+	if (!*front)
 		return (-1);
-	bin = front->bin;
-	aux = front;
-	if (front->next)
-		front = front->next;
+	aux = *front;
+	bin = aux->bin;
+	if (aux->next)
+		*front = aux->next;
 	else
 	{
-		free(front);
-		front = NULL;
+		free(*front);
+		*front = NULL;
 		return (bin);
 	}
 	free(aux);

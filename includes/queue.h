@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 18:38:28 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/21 19:04:12 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/22 13:17:12 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ typedef struct s_queue {
 	int				bin;
 }				t_queue;
 
-int		dequeue_nikko(t_queue *front);
-int		dequeue_fauna(t_queue *front);
+int		dequeue_nikko(t_queue **front);
+int		dequeue_fauna(t_queue **front);
 void	enqueue_pre_alloc(t_queue **front, int bin);
 void	enqueue_alloc_onreq(t_queue **front, int bin);
 

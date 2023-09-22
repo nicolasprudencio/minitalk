@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 20:10:05 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/21 20:14:36 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:05:33 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "queue.h"
 #include <minunit.h>
 
-MU_TEST(tests_dequeue_output_fauna)
+MU_TEST(test_dequeue_output_fauna)
 {
 	t_queue	*front;
 	int		output;
@@ -25,15 +25,42 @@ MU_TEST(tests_dequeue_output_fauna)
 	int i = 0;
 	while (front)
 	{
-		output = dequeue_nikko(front);
+		output = dequeue_nikko(&front);
 		mu_check(output == i);
 		i++;
 	}
 }
 
+MU_TEST(test_first_pos_ref_fauna)
+{	
+	t_queue	*front;
+
+	front = NULL;
+	enqueue_pre_alloc(&front, 30);
+	enqueue_pre_alloc(&front, 35);
+	dequeue_fauna(&front);
+	mu_check(front->bin == 35);
+	dequeue_fauna(&front);
+	mu_check(front == NULL);
+}
+
+MU_TEST(test_first_pos_ref_nikko)
+{	
+	t_queue	*front;
+
+	front = NULL;
+	enqueue_alloc_onreq(&front, 30);
+	enqueue_alloc_onreq(&front, 35);
+	dequeue_nikko(&front);
+	mu_check(front->bin == 35);
+	dequeue_nikko(&front);
+	mu_check(front == NULL);
+}
 MU_TEST_SUITE(dequeue_suit)
 {
-	MU_RUN_TEST(tests_dequeue_output_fauna);
+	MU_RUN_TEST(test_dequeue_output_fauna);
+	MU_RUN_TEST(test_first_pos_ref_fauna);
+	MU_RUN_TEST(test_first_pos_ref_nikko);
 }
 
 int main(void)
