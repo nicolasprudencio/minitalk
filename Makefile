@@ -6,9 +6,11 @@ LIBS_LINK	=	-L $(LIBFT_DIR) -lrt -lm -lft
 MINUNIT		=	-I ./includes/minunit 
 INCLUDE		=	-I ./includes $(LIBFT) $(MINUNIT)
 
-SRCS_QUEUE	=	enqueue.c dequeue.c
+SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c
+SRCS_DECODE	=	bin_to_char.c
 
 SRCS_ALL	=	$(addprefix srcs/server/data/queue/,$(SRCS_QUEUE))
+SRCS_ALL	+=	$(addprefix srcs/server/decode/,$(SRCS_DECODE))
 
 OBJS_DIR		=	objs
 OBJS_ALL	=	$(addprefix $(OBJS_DIR)/,$(SRCS_ALL:.c=.o))
@@ -19,6 +21,8 @@ MAIN_NIKKO	=	srcs/client/nikko/main.c
 MAIN_FAUNA	=	srcs/client/polarium/main.c
 ENQUEUE_TEST	=	srcs/server/tests/enqueue_test.c
 DEQUEUE_TEST	=	srcs/server/tests/dequeue_test.c
+BTOC_TEST	=	srcs/server/tests/bin_to_char_test.c
+Q_LEN_TEST	=	srcs/server/tests/queue_len_test.c
 
 ANSI		=	\033[0
 YELLOW		=	;33
@@ -27,7 +31,7 @@ RED			=	;31
 
 all: $(OBJS_ALL) libft_make server client
 
-tests: $(OBJS_ALL) queue_test enqueue_test
+tests: $(OBJS_ALL) queue_test enqueue_test btoc_test
 
 enqueue_test: $(OBJS_ALL) libft_make
 	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o enqueue_test $(ENQUEUE_TEST) $(LIBS_LINK)
@@ -35,6 +39,12 @@ enqueue_test: $(OBJS_ALL) libft_make
 dequeue_test: $(OBJS_ALL) libft_make
 	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o dequeue_test $(DEQUEUE_TEST) $(LIBS_LINK)
 	
+btoc_test: $(OBJS_ALL) libft_make
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o btoc_test $(BTOC_TEST) $(LIBS_LINK)
+
+qlen_test: $(OBJS_ALL) libft_make
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o qlen_test $(Q_LEN_TEST) $(LIBS_LINK)
+
 libft_make:
 	@make -C $(LIBFT_DIR)
 
@@ -59,4 +69,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all tests enqueue_test dequeue_test libft_make server client clean f_clean re
+.PHONY: all tests enqueue_test dequeue_test btoc_test libft_make server client clean f_clean re

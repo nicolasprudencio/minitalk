@@ -1,30 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   queue_len_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 18:38:28 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/22 17:30:12 by nprudenc         ###   ########.fr       */
+/*   Created: 2023/09/22 17:21:20 by nprudenc          #+#    #+#             */
+/*   Updated: 2023/09/22 17:31:05 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#include <minunit.h>
+#include <queue.h>
 
-# include <libft.h>
+MU_TEST(queue_len_test)
+{
+	t_queue	*front;
+	size_t	len;
 
-typedef struct s_queue {
-	struct s_queue	*next;
-	int				bin;
-}				t_queue;
+	front = NULL;
+	for (int i = 0; i < 20; i++)
+	{
+		enqueue_pre_alloc(&front, i);
+	}
+	len = queue_len(&front);
+	mu_check(len == 20);
+}
 
-int		dequeue_nikko(t_queue **front);
-int		dequeue_fauna(t_queue **front);
-void	enqueue_pre_alloc(t_queue **front, int bin);
-void	enqueue_alloc_onreq(t_queue **front, int bin);
-char	bin_to_char(t_queue **front);
-size_t	queue_len(t_queue **front);
+MU_TEST_SUITE(queue_len_suite)
+{
+	MU_RUN_TEST(queue_len_test);
+}
 
-#endif
+int	main(void)
+{
+	MU_RUN_SUITE(queue_len_suite);
+	MU_REPORT();
+	return (MU_EXIT_CODE);
+}

@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   queue.h                                            :+:      :+:    :+:   */
+/*   bin_to_char.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 18:38:28 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/22 17:30:12 by nprudenc         ###   ########.fr       */
+/*   Created: 2023/09/22 16:09:03 by nprudenc          #+#    #+#             */
+/*   Updated: 2023/09/22 17:13:35 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef QUEUE_H
-# define QUEUE_H
+#include "queue.h"
+#include "libft.h"
+#include <stdio.h>
 
-# include <libft.h>
+char	bin_to_char(t_queue **front)
+{
+	char	output;
+	int		bin;
+	int		n;
 
-typedef struct s_queue {
-	struct s_queue	*next;
-	int				bin;
-}				t_queue;
-
-int		dequeue_nikko(t_queue **front);
-int		dequeue_fauna(t_queue **front);
-void	enqueue_pre_alloc(t_queue **front, int bin);
-void	enqueue_alloc_onreq(t_queue **front, int bin);
-char	bin_to_char(t_queue **front);
-size_t	queue_len(t_queue **front);
-
-#endif
+	if (!*front)
+		return (-1);
+	n = 7;
+	output = '\0';
+	bin = dequeue_fauna(front);
+	while (n >= 0)
+	{ 	
+		output |= (bin << n--);
+		bin = dequeue_fauna(front);
+			 
+	}
+	return (output);
+}
