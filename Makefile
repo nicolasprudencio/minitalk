@@ -7,7 +7,7 @@ MINUNIT		=	-I ./includes/minunit
 INCLUDE		=	-I ./includes $(LIBFT) $(MINUNIT)
 
 SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c
-SRCS_DECODE	=	bin_to_char.c
+SRCS_DECODE	=	bin_to_char.c char_to_sig.c
 
 SRCS_ALL	=	$(addprefix srcs/server/data/queue/,$(SRCS_QUEUE))
 SRCS_ALL	+=	$(addprefix srcs/server/decode/,$(SRCS_DECODE))
@@ -22,6 +22,7 @@ MAIN_FAUNA	=	srcs/client/polarium/main.c
 ENQUEUE_TEST	=	srcs/server/tests/enqueue_test.c
 DEQUEUE_TEST	=	srcs/server/tests/dequeue_test.c
 BTOC_TEST	=	srcs/server/tests/bin_to_char_test.c
+CTOS_TEST	=	srcs/server/tests/char_to_sig_test.c
 Q_LEN_TEST	=	srcs/server/tests/queue_len_test.c
 
 ANSI		=	\033[0
@@ -41,6 +42,9 @@ dequeue_test: $(OBJS_ALL) libft_make
 	
 btoc_test: $(OBJS_ALL) libft_make
 	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o btoc_test $(BTOC_TEST) $(LIBS_LINK)
+
+ctos_test: $(OBJS_ALL) libft_make
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o ctos_test $(CTOS_TEST) $(LIBS_LINK)
 
 qlen_test: $(OBJS_ALL) libft_make
 	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o qlen_test $(Q_LEN_TEST) $(LIBS_LINK)
@@ -66,7 +70,11 @@ clean:
 	@rm -rf $(OBJS_DIR)
 
 fclean: clean
+	@rm -rf enqueue_test
+	@rm -rf dequeue_test
+	@rm -rf btoc_test
+	@rm -rf qlen_test
 
 re: fclean all
 
-.PHONY: all tests enqueue_test dequeue_test btoc_test libft_make server client clean f_clean re
+.PHONY: all tests enqueue_test dequeue_test btoc_test q_len_test libft_make server client clean f_clean re
