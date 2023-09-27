@@ -6,38 +6,54 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:11:49 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/20 18:21:00 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:52:17 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "queue.h"
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>
 
-void	print_sig(int signal);
+void	handle_signal(int signal, siginfo_t *info, void *context);
+
 
 int	main(void)
 {
-	struct sigaction	*action1;
+	struct sigaction	action;
 	pid_t				pid;
 
-	action1->sa_handler = print_sig;
-	sigemptyset(&action1->sa_mask);
-	action1->sa_flags = 0;
+	action.sa_sigaction = (void *)handle_signal;
+	sigemptyset(&action.sa_mask);
+	action.sa_flags = SA_SIGINFO;
 	pid = getpid();
 	printf("server PID: %d\n", pid);
-	sigaction(SIGUSR1, action1, NULL);
-	sigaction(SIGUSR2, action1, NULL);
+	sigaction(SIGUSR1, &action, NULL);
+	sigaction(SIGUSR2, &action, NULL);
 	while (1)
-		;
-}		
+	{
+		if (queue_len(&front) >= 8)
+		{
+			char c = bin_to_char(&front);
+			fp_putchar_fd(c, 1);
+		}
+	}
+}
 
-void	print_sig(int signal)
+void	handle_signal(int signal, siginfo_t *info, void *context)
 {
+	pid_t	client_pid;
+
+	client_pid = info->si_pid;
 	if (signal == SIGUSR1)
-		printf("SIGUSR1 received\n");
+	{
+		kill(client_pid, SIGUSR1);
+	}
 	else if (signal == SIGUSR2)
-		printf("SIGUSR2 received\n");
+	{
+		kill(client_pid, SIGUSR1);
+	}
 	else
-		printf("No signal received\n");
+		fp_printf("No signal received\n");
+	context = NULL;
 }

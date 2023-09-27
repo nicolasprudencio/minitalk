@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 20:10:05 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/22 15:17:46 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/27 13:55:21 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ MU_TEST(test_dequeue_output_fauna)
 	int		output;
 
 	front = NULL;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 2000; i++)
 		enqueue_pre_alloc(&front, i);
 	int i = 0;
 	while (front)
@@ -37,7 +37,7 @@ MU_TEST(test_dequeue_output_nikko)
 	int		output;
 
 	front = NULL;
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 2000; i++)
 		enqueue_pre_alloc(&front, i);
 	int i = 0;
 	while (front)

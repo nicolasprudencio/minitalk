@@ -57,13 +57,13 @@ $(OBJS_DIR)/%.o:%.c
 	@$(CC) $(C_FLAGS) -c $< -o $@ $(INCLUDE)
 
 server: $(OBJS_ALL)
-	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(MAIN_SERVER) -o $<
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(INCLUDE) -o $@ $(MAIN_SERVER) $(LIBS_LINK)
 	@printf "%s$(ANSI)$(YELLOW)m%-15s$(ANSI)m\n" "server:" "Compiled"
 
 client: $(OBJS_ALL)
-	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(MAIN_FAUNA) -o client_fauna
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(MAIN_FAUNA) $(INCLUDE) -o client_fauna $(LIBS_LINK)
 	@printf "%s$(ANSI)$(YELLOW)m%-15s$(ANSI)m\n" "client_fauna:" "Compiled"
-	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(MAIN_NIKKO) -o client_nikko
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(MAIN_NIKKO) $(INCLUDE) -o client_nikko $(LIBS_LINK)
 	@printf "%s$(ANSI)$(YELLOW)m%-15s$(ANSI)m\n" "client_nikko:" "Compiled"
 
 clean:

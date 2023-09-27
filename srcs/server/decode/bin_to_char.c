@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:09:03 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/22 17:39:20 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:10:32 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,10 @@ char	bin_to_char(t_queue **front)
 	}
 	n = 7;
 	output = '\0';
-	bin = dequeue_fauna(front);
 	while (n >= 0)
 	{ 	
+		bin = dequeue_nikko(front);
 		output |= (bin << n--);
-		bin = dequeue_fauna(front);
-			 
 	}
 	return (output);
 }
