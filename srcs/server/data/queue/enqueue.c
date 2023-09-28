@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 18:48:29 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 16:20:57 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:43:40 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	enqueue_alloc_onreq(t_queue **front, int bin)
 		return (1);
 	}
 	else if (!*front)
-		return (0);		
+		return (0);
 	else
 	{
 		new = *front;

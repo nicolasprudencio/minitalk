@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enqueue_char.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/28 18:44:03 by nprudenc          #+#    #+#             */
+/*   Updated: 2023/09/28 18:44:15 by nprudenc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "queue.h"
 
 int	enqueue_char(char c, t_queue **front)
@@ -27,4 +39,4 @@ int	enqueue_char(char c, t_queue **front)
 	free(bin);
 	bin = NULL;
 	return (1);
-} 
+}

@@ -6,20 +6,20 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:12:00 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 18:32:11 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:46:44 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "queue.h"
 #include <signal.h>
 
-static int	connection = 1;
+static int	g_connection = 1;
 
 static void	st_observer(int sig)
 {
 	usleep(100);
 	if (sig == SIGUSR1)
-		connection = 1;
+		g_connection = 1;
 }
 
 static void	st_set_handler(struct sigaction *action)
@@ -40,30 +40,30 @@ static void	st_send_bin(char *bin, pid_t pid)
 	while (bin[j])
 	{
 		timeout = 0;
-		if (connection == 1)
+		if (g_connection == 1)
 		{
 			if (bin[j] == '0')
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
 			j++;
-			connection = 0;
+			g_connection = 0;
 		}
-		while (connection == 0)
+		while (g_connection == 0)
 		{
 			timeout++;
 			usleep(100);
 			if (timeout > 1000)
-				connection = 1;
+				g_connection = 1;
 		}
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	char	*bin;
-	int	i;
-	pid_t	pid;
+	char				*bin;
+	int					i;
+	pid_t				pid;
 	struct sigaction	action;
 
 	if (argc != 3)
@@ -81,4 +81,3 @@ int	main(int argc, char **argv)
 	}
 	return (0);
 }
-
