@@ -14,12 +14,15 @@
 # define QUEUE_H
 
 # include <libft.h>
+# include <signal.h>
+
 
 typedef struct s_queue {
 	struct s_queue	*next;
 	int				bin;
 }				t_queue;
 
+char		dequeue_limit(t_queue **front, int minimum);
 int		dequeue(t_queue **front);
 int		dequeue_nikko(t_queue **front);
 int		dequeue_fauna(t_queue **front);

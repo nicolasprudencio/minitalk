@@ -6,7 +6,7 @@ LIBS_LINK	=	-L $(LIBFT_DIR) -lrt -lm -lft
 MINUNIT		=	-I ./includes/minunit 
 INCLUDE		=	-I ./includes $(LIBFT) $(MINUNIT)
 
-SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c enqueue_char.c
+SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c enqueue_char.c queue_limit.c
 
 SRCS_DECODE	=	dequeue_btoc.c
 

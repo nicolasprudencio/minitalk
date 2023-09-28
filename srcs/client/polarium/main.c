@@ -17,7 +17,7 @@ static int	connection = 1;
 
 static void	st_observer(int sig)
 {
-	usleep(100);
+	usleep(10);
 	if (sig == SIGUSR1)
 		connection = 1;
 }
@@ -30,11 +30,39 @@ static void	st_set_handler(struct sigaction *action)
 	sigaction(SIGUSR1, action, NULL);
 }
 
+static void	st_send_bin(char *bin, pid_t pid)
+{
+	int	j;
+	int	timeout;
+
+	j = 0;
+	timeout = 0;
+	while (bin[j])
+	{
+		timeout = 0;
+		if (connection == 1)
+		{
+			if (bin[j] == '0')
+				kill(pid, SIGUSR2);
+			else
+				kill(pid, SIGUSR1);
+			j++;
+			connection = 0;
+		}
+		while (connection == 0)
+		{
+			timeout++;
+			usleep(10);
+			if (timeout > 1000)
+				connection = 1;
+		}
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	char	*bin;
 	int	i;
-	int	j;
 	pid_t	pid;
 	struct sigaction	action;
 
@@ -46,22 +74,9 @@ int	main(int argc, char **argv)
 	while (argv[2][++i])
 	{
 		bin = char_to_bin(argv[2][i]);
-		fp_printf("bin_str: %s\n", bin);
-		j = 0;
-		while (bin[j])
-		{
-			usleep(300);
-			if (connection == 1)
-			{
-				if (bin[j] == '0')
-					kill(pid, SIGUSR2);
-				else
-					kill(pid, SIGUSR1);
-				j++;
-				connection = 0;
-			}
-		}
+		st_send_bin(bin, pid);
 		free(bin);
 	}
 	return (0);
 }
+
