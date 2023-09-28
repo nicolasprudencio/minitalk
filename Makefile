@@ -1,5 +1,5 @@
 CC			=	gcc
-C_FLAGS		=	-Wall -Wextra -Werror -g3 -ggdb -pg
+C_FLAGS		=	-Wall -Wextra -Werror -g3 -ggdb
 LIBFT_DIR	=	./includes/libft/
 LIBFT		=	-I $(LIBFT_DIR)header 
 LIBS_LINK	=	-L $(LIBFT_DIR) -lrt -lm -lft

@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:11:49 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 16:30:32 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:20:41 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	handle_signal(int signal, siginfo_t *info, void *context)
 	client_pid = info->si_pid;
 	if (signal == SIGUSR1)
 	{
-		usleep(10);
+		usleep(100);
 		enqueue_pre_alloc(&front, 1);
 		kill(client_pid, SIGUSR1);
 	}
 	else if (signal == SIGUSR2)
 	{
-		usleep(10);
+		usleep(100);
 		enqueue_pre_alloc(&front, 0);
 		kill(client_pid, SIGUSR1);
 	}

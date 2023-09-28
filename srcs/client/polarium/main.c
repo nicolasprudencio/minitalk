@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:12:00 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 14:33:54 by nprudenc         ###   ########.fr       */
+/*   Updated: 2023/09/28 18:32:11 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	connection = 1;
 
 static void	st_observer(int sig)
 {
-	usleep(10);
+	usleep(100);
 	if (sig == SIGUSR1)
 		connection = 1;
 }
@@ -52,7 +52,7 @@ static void	st_send_bin(char *bin, pid_t pid)
 		while (connection == 0)
 		{
 			timeout++;
-			usleep(10);
+			usleep(100);
 			if (timeout > 1000)
 				connection = 1;
 		}
@@ -74,6 +74,8 @@ int	main(int argc, char **argv)
 	while (argv[2][++i])
 	{
 		bin = char_to_bin(argv[2][i]);
+		if (!bin)
+			return (1);
 		st_send_bin(bin, pid);
 		free(bin);
 	}
