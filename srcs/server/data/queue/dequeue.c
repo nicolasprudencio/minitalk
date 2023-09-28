@@ -1,7 +1,7 @@
 #include "queue.h"
 #include "libft.h"
 
-int	dequeue_fauna(t_queue **front)
+int	dequeue(t_queue **front)
 {
 	int		bin;
 	t_queue	*temp;

@@ -7,13 +7,18 @@ MINUNIT		=	-I ./includes/minunit
 INCLUDE		=	-I ./includes $(LIBFT) $(MINUNIT)
 
 SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c
-SRCS_DECODE	=	bin_to_char.c char_to_sig.c
+SRCS_DECODE	=	dequeue_bin.c
 
-SRCS_ALL	=	$(addprefix srcs/server/data/queue/,$(SRCS_QUEUE))
-SRCS_ALL	+=	$(addprefix srcs/server/decode/,$(SRCS_DECODE))
+SRCS_ENCRYPT	=	char_to_bin.c
+
+SRCS_SERVER	=	$(addprefix srcs/server/data/queue/,$(SRCS_QUEUE))
+SRCS_SERVER	+=	$(addprefix srcs/server/decode/,$(SRCS_DECODE))
+
+SRCS_CLIENT	=	$(addprefix srcs/client/polarium/encrypt/,$(SRCS_ENCRYPT))
 
 OBJS_DIR		=	objs
-OBJS_ALL	=	$(addprefix $(OBJS_DIR)/,$(SRCS_ALL:.c=.o))
+OBJS_ALL	=	$(addprefix $(OBJS_DIR)/,$(SRCS_SERVER:.c=.o))
+OBJS_ALL	+=	$(addprefix $(OBJS_DIR)/,$(SRCS_CLIENT:.c=.o))
 
 
 MAIN_SERVER	=	srcs/server/main.c
