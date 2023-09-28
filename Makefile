@@ -1,13 +1,14 @@
 CC			=	gcc
-C_FLAGS		=	-Wall -Wextra -Werror -g3 -ggdb
+C_FLAGS		=	-Wall -Wextra -Werror -g3 -ggdb -pg
 LIBFT_DIR	=	./includes/libft/
 LIBFT		=	-I $(LIBFT_DIR)header 
 LIBS_LINK	=	-L $(LIBFT_DIR) -lrt -lm -lft
 MINUNIT		=	-I ./includes/minunit 
 INCLUDE		=	-I ./includes $(LIBFT) $(MINUNIT)
 
-SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c
-SRCS_DECODE	=	dequeue_bin.c
+SRCS_QUEUE	=	enqueue.c dequeue.c queue_len.c enqueue_char.c
+
+SRCS_DECODE	=	dequeue_btoc.c
 
 SRCS_ENCRYPT	=	char_to_bin.c
 
@@ -26,8 +27,8 @@ MAIN_NIKKO	=	srcs/client/nikko/main.c
 MAIN_FAUNA	=	srcs/client/polarium/main.c
 ENQUEUE_TEST	=	srcs/server/tests/enqueue_test.c
 DEQUEUE_TEST	=	srcs/server/tests/dequeue_test.c
-BTOC_TEST	=	srcs/server/tests/bin_to_char_test.c
-CTOS_TEST	=	srcs/server/tests/char_to_sig_test.c
+BTOC_TEST	=	srcs/server/tests/dequeue_btoc_test.c
+CTOS_TEST	=	srcs/server/tests/char_to_bin_test.c
 Q_LEN_TEST	=	srcs/server/tests/queue_len_test.c
 
 ANSI		=	\033[0
@@ -79,6 +80,7 @@ fclean: clean
 	@rm -rf dequeue_test
 	@rm -rf btoc_test
 	@rm -rf qlen_test
+	@make -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

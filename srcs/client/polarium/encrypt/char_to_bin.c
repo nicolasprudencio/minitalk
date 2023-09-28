@@ -2,13 +2,21 @@
 
 char	*char_to_bin(char input)
 {
-	char	*output = (char *)fp_calloc(9, sizeof(char));
+	char	*output;
 	char	current;
 	char	mask;
 	int		bit;
 	
 	bit = 8;
 	mask = 1;
+	output = (char *)fp_calloc(9, sizeof(char));
+	if (!output)
+		return (NULL);
+	if (!input)
+	{
+		fp_printf("Error: input char is undefined!");
+		return (NULL);
+	}
 	while (bit > 0)
 	{
 		current = (input >> --bit) & mask;

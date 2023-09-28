@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   dequeue_bin.c                                      :+:      :+:    :+:   */
+/*   dequeue_btoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:09:03 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/27 20:04:48 by fpolaris         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:18:39 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "queue.h"
 
-char	dequeue_bin(t_queue **front)
+char	dequeue_btoc(t_queue **front)
 {
 	char	output;
 	int		bin;
@@ -22,15 +22,16 @@ char	dequeue_bin(t_queue **front)
 		return (-1);
 	if (queue_len(front) < 8)
 	{	
-		fp_printf("Error:");
-		fp_printf("Not enough bits for dequeue\n");
+		fp_printf("Error: Not enough bits for dequeue\n");
 		return (-1);
 	}
 	n = 7;
 	output = '\0';
 	while (n >= 0)
-	{ 	
+	{
 		bin = dequeue(front);
+		if (bin == -1)
+			return (-1);
 		output |= (bin << n--);
 	}
 	return (output);
