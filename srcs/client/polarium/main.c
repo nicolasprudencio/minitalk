@@ -17,7 +17,6 @@ static int	connection = 1;
 
 static void	st_observer(int sig)
 {
-	usleep(10);
 	if (sig == SIGUSR1)
 		connection = 1;
 }
@@ -42,6 +41,7 @@ static void	st_send_bin(char *bin, pid_t pid)
 		timeout = 0;
 		if (connection == 1)
 		{
+			usleep(10);
 			if (bin[j] == '0')
 				kill(pid, SIGUSR2);
 			else
@@ -52,7 +52,7 @@ static void	st_send_bin(char *bin, pid_t pid)
 		while (connection == 0)
 		{
 			timeout++;
-			usleep(10);
+			usleep(100);
 			if (timeout > 1000)
 				connection = 1;
 		}
@@ -74,6 +74,8 @@ int	main(int argc, char **argv)
 	while (argv[2][++i])
 	{
 		bin = char_to_bin(argv[2][i]);
+		if (!bin)
+			break ;
 		st_send_bin(bin, pid);
 		free(bin);
 	}
