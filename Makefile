@@ -74,6 +74,8 @@ client: $(OBJS_ALL)
 
 clean:
 	@rm -rf $(OBJS_DIR)
+	@rm -rf client_fauna
+	@rm -rf client_nikko
 
 fclean: clean
 	@rm -rf enqueue_test

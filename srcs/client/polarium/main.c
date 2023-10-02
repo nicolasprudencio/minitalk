@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpolaris <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/27 13:12:00 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 14:33:54 by nprudenc         ###   ########.fr       */
+/*   Created: 2023/10/02 08:54:19 by fpolaris          #+#    #+#             */
+/*   Updated: 2023/10/02 08:54:21 by fpolaris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "queue.h"
 #include <signal.h>
 
-static int	connection = 1;
+static int	g_connection = 1;
 
 static void	st_observer(int sig)
 {
 	if (sig == SIGUSR1)
-		connection = 1;
+		g_connection = 1;
 }
 
 static void	st_set_handler(struct sigaction *action)
@@ -35,11 +35,10 @@ static void	st_send_bin(char *bin, pid_t pid)
 	int	timeout;
 
 	j = 0;
-	timeout = 0;
 	while (bin[j])
 	{
 		timeout = 0;
-		if (connection == 1)
+		if (g_connection == 1)
 		{
 			usleep(10);
 			if (bin[j] == '0')
@@ -47,23 +46,23 @@ static void	st_send_bin(char *bin, pid_t pid)
 			else
 				kill(pid, SIGUSR1);
 			j++;
-			connection = 0;
+			g_connection = 0;
 		}
-		while (connection == 0)
+		while (g_connection == 0)
 		{
 			timeout++;
-			usleep(100);
+			usleep(30);
 			if (timeout > 1000)
-				connection = 1;
+				g_connection = 1;
 		}
 	}
 }
 
 int	main(int argc, char **argv)
 {
-	char	*bin;
-	int	i;
-	pid_t	pid;
+	char				*bin;
+	int					i;
+	pid_t				pid;
 	struct sigaction	action;
 
 	if (argc != 3)
@@ -75,10 +74,9 @@ int	main(int argc, char **argv)
 	{
 		bin = char_to_bin(argv[2][i]);
 		if (!bin)
-			break ;
+			return (1);
 		st_send_bin(bin, pid);
 		free(bin);
 	}
 	return (0);
 }
-

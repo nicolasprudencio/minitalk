@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enqueue_char.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpolaris <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 08:55:24 by fpolaris          #+#    #+#             */
+/*   Updated: 2023/10/02 08:55:25 by fpolaris         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "queue.h"
 
 int	enqueue_char(char c, t_queue **front)
@@ -20,11 +32,11 @@ int	enqueue_char(char c, t_queue **front)
 	while (bin[++i])
 	{
 		if (bin[i] == '1')
-			enqueue_alloc_onreq(front, 1);
+			enqueue(front, 1);
 		else
-			enqueue_alloc_onreq(front, 0);
+			enqueue(front, 0);
 	}
 	free(bin);
 	bin = NULL;
 	return (1);
-} 
+}

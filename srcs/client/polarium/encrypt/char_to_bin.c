@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   char_to_bin.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fpolaris <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/10/02 08:54:37 by fpolaris          #+#    #+#             */
+/*   Updated: 2023/10/02 08:54:39 by fpolaris         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "queue.h"
 
 char	*char_to_bin(char input)
@@ -6,7 +18,7 @@ char	*char_to_bin(char input)
 	char	current;
 	char	mask;
 	int		bit;
-	
+
 	bit = 8;
 	mask = 1;
 	output = (char *)fp_calloc(9, sizeof(char));

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fpolaris <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 17:11:49 by nprudenc          #+#    #+#             */
-/*   Updated: 2023/09/28 16:30:32 by nprudenc         ###   ########.fr       */
+/*   Created: 2023/10/02 08:56:29 by fpolaris          #+#    #+#             */
+/*   Updated: 2023/10/02 08:57:06 by fpolaris         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "queue.h"
 
-t_queue	*front;
+t_queue	*g_front;
 
 void	handle_signal(int signal, siginfo_t *info, void *context)
 {
@@ -24,17 +24,17 @@ void	handle_signal(int signal, siginfo_t *info, void *context)
 	client_pid = info->si_pid;
 	if (signal == SIGUSR1)
 	{
-		usleep(10);
-		enqueue_pre_alloc(&front, 1);
+		usleep(30);
+		enqueue(&g_front, 1);
 		kill(client_pid, SIGUSR1);
 	}
 	else if (signal == SIGUSR2)
 	{
-		usleep(10);
-		enqueue_pre_alloc(&front, 0);
+		usleep(30);
+		enqueue(&g_front, 0);
 		kill(client_pid, SIGUSR1);
 	}
-	c = dequeue_limit(&front, 8);
+	c = dequeue_limit(&g_front, 8);
 	if (c != -1)
 		write(1, &c, 1);
 	context = NULL;
@@ -49,13 +49,12 @@ static void	st_set_handlers(struct sigaction *action)
 	sigaction(SIGUSR2, action, NULL);
 }
 
-
 int	main(void)
 {
 	struct sigaction	action;
 	pid_t				pid;
 
-	front = NULL;
+	g_front = NULL;
 	st_set_handlers(&action);
 	pid = getpid();
 	fp_printf("server PID: %d\n", pid);
